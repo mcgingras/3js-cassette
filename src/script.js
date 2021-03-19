@@ -57,7 +57,11 @@ var APP = {
       controls = new OrbitControls(camera, dom);
       controls.enableDamping = true;
 
+      const normalMaterial =  new THREE.MeshNormalMaterial();
+      // scene.children[0].children[0].children[4].material = normalMaterial;
+
       scene.children[0].rotation.y = 0;
+
 
       /**
        * Debug controls
@@ -71,6 +75,16 @@ var APP = {
       .min(4)
       .max(20) // lol
       .name("Tape Y");
+
+      gui.add(scene.children[0].children[0].children[8].material, 'metalness')
+      .min(0)
+      .max(5)
+      .step(0.0001);
+
+      gui.add(scene.children[0].children[0].children[8].material, 'roughness')
+      .min(0)
+      .max(1)
+      .step(0.0001);
 
       gui.addColor(parameters, 'color')
       .onChange(() => {
@@ -144,6 +158,8 @@ var APP = {
       })
       .name("Bottom Bracket Back");
 		};
+
+    console.log(gui);
 
 		this.setCamera = function ( value ) {
 			camera = value;
