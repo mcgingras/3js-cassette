@@ -11,7 +11,7 @@ window.THREE = THREE;
 
 const gui = new dat.GUI()
 const parameters = {
-    color: 0xff0000
+    color: 0xffffff
 }
 
 var loader = new THREE.FileLoader();
@@ -54,31 +54,95 @@ var APP = {
 
 			this.setScene( loader.parse( json.scene ) );
 			this.setCamera( loader.parse( json.camera ) );
-            controls = new OrbitControls(camera, dom);
-            controls.enableDamping = true;
+      controls = new OrbitControls(camera, dom);
+      controls.enableDamping = true;
 
-            /**
-             * Debug controls
-             */
-            gui.add(scene.children[0].position, 'x')
-            .min(-10)
-            .max(10)
-            .name("x pos");
+      scene.children[0].rotation.y = 0;
 
-            gui.addColor(parameters, 'color')
-            .onChange(() => {
-                scene.children[0].children[0].children[4].material.color.set(parameters.color);
-            })
-            .name("sticker color");
+      /**
+       * Debug controls
+       */
+      gui.add(scene.children[0].position, 'x')
+      .min(-10)
+      .max(10)
+      .name("Tape X");
 
-            gui.addColor(parameters, 'color')
-            .onChange(() => {
-                scene.children[0].children[0].children[0].material.color.set(parameters.color);
-                scene.children[0].children[0].children[1].material.color.set(parameters.color);
-                scene.children[0].children[0].children[2].material.color.set(parameters.color);
-                scene.children[0].children[0].children[3].material.color.set(parameters.color);
-            })
-            .name("screw color");
+      gui.add(scene.children[0].position, 'y')
+      .min(4)
+      .max(20) // lol
+      .name("Tape Y");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[4].material.color.set(parameters.color);
+      })
+      .name("T/B Sticker");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[0].material.color.set(parameters.color);
+          scene.children[0].children[0].children[1].material.color.set(parameters.color);
+          scene.children[0].children[0].children[2].material.color.set(parameters.color);
+          scene.children[0].children[0].children[3].material.color.set(parameters.color);
+      })
+      .name("Screws");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[5].material.color.set(parameters.color);
+      })
+      .name("Mid Sticker");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[6].material.color.set(parameters.color);
+      })
+      .name("Bottom Bracket");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[8].material.color.set(parameters.color);
+      })
+      .name("Pane Front");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[7].material.color.set(parameters.color);
+      })
+      .name("Pane Front Mid");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[9].material.color.set(parameters.color);
+          scene.children[0].children[0].children[10].material.color.set(parameters.color);
+          scene.children[0].children[0].children[11].material.color.set(parameters.color);
+          scene.children[0].children[0].children[12].material.color.set(parameters.color);
+      })
+      .name("Tape");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[13].material.color.set(parameters.color);
+      })
+      .name("Pane Center");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[14].material.color.set(parameters.color);
+      })
+      .name("Pane Back");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[15].material.color.set(parameters.color);
+      })
+      .name("Pane Back Mid");
+
+      gui.addColor(parameters, 'color')
+      .onChange(() => {
+          scene.children[0].children[0].children[16].material.color.set(parameters.color);
+      })
+      .name("Bottom Bracket Back");
 		};
 
 		this.setCamera = function ( value ) {
@@ -88,7 +152,7 @@ var APP = {
 		};
 
 		this.setScene = function ( value ) {
-            console.log(value);
+      console.log(value);
 			scene = value;
 		};
 
@@ -116,11 +180,8 @@ var APP = {
         // different animations
 		function animate() {
 			time = performance.now();
-            let group = scene.children[0];
-            group.position.y = Math.sin(time * .002) + 7;
-            // group.rotation.y = 0;
-            // group.rotation.z += .01;
-            controls.update();
+      let group = scene.children[0];
+      controls.update();
 			renderer.render( scene, camera);
 			prevTime = time;
 		}
